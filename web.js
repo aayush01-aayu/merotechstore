@@ -208,7 +208,7 @@ function productCard(p) {
             ${p.oldPrice ? `<span class="product-price-old">Rs. ${p.oldPrice.toLocaleString()}</span>` : ''}
           </div>
           ${isHomemade
-            ? `<a class="add-cart-btn" href="https://wa.me/9779707111332?text=${waMsg}" target="_blank" style="background:#25d366;text-decoration:none;" onclick="event.stopPropagation()">💬 Enquire</a>`
+            ? `<a class="add-cart-btn" href="https://wa.me/9779744924667?text=${waMsg}" target="_blank" style="background:#25d366;text-decoration:none;" onclick="event.stopPropagation()">💬 Enquire</a>`
             : `<button class="add-cart-btn" style="${disabled}" onclick="event.stopPropagation();addToCart('${p.id}','${escHtml(p.name)}',${p.price},'${p.emoji}')">🛒 ${p.avail === 'pre-order' ? 'Pre-Order' : 'Add'}</button>`
           }
         </div>
