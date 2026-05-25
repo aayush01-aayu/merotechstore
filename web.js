@@ -78,8 +78,8 @@ const data = {
   ],
   // ── Homemade Gadgets ──
   ups: [
-    {id:'hg1',name:'Mini Auto Plant Watering System',specs:'Soil moisture sensor, DC pump, Arduino Nano, Runs on 5V USB',price:1800,oldPrice:null,avail:'in-stock',cat:'all',emoji:'🌱',imgs:['images/lll.png'],rating:4.8,rev:12},
-    {id:'hg2',name:'Door Knock Alert (Wireless)',specs:'Vibration sensor, RF 433MHz transmitter, LED + buzzer receiver unit',price:1200,oldPrice:null,avail:'in-stock',cat:'all',emoji:'🚪',imgs:['images/lll.png'],rating:4.7,rev:8},
+    {id:'hg1',name:'Live Soon',specs:'Soil moisture sensor, DC pump, Arduino Nano, Runs on 5V USB',price:1,oldPrice:null,avail:'in-stock',cat:'all',emoji:'🌱',imgs:['images/lll.png'],rating:4.8,rev:12},
+    {id:'hg2',name:'Live Soon',specs:'Vibration sensor, RF 433MHz transmitter, LED + buzzer receiver unit',price:1,oldPrice:null,avail:'in-stock',cat:'all',emoji:'🚪',imgs:['images/lll.png'],rating:4.7,rev:8},
     {id:'hg3',name:'USB Desktop Fan Controller',specs:'PWM speed control, Rotary knob, 3-speed, 5V USB powered',price:950,oldPrice:null,avail:'in-stock',cat:'all',emoji:'💨',imgs:['images/lll.png'],rating:4.6,rev:15},
     {id:'hg4',name:'Room Temperature & Humidity Display',specs:'DHT22 sensor, 0.96" OLED screen, USB powered, Real-time readings',price:1400,oldPrice:null,avail:'in-stock',cat:'all',emoji:'🌡️',imgs:['images/lll.png'],rating:4.9,rev:21},
     {id:'hg5',name:'Clap-Activated Light Switch',specs:'Sound sensor module, Relay-based, Works with existing light circuits',price:1600,oldPrice:null,avail:'low-stock',cat:'all',emoji:'👏',imgs:['images/lll.png'],rating:4.7,rev:6},
@@ -360,7 +360,7 @@ function closeCart() {
 function checkout() {
   if(cart.length === 0) { showToast('⚠️ Your cart is empty!'); return; }
 
-  const WHATSAPP_NUMBER = '9779707111332'; // Business WhatsApp number
+  const WHATSAPP_NUMBER = '9779744924667'; // Business WhatsApp number
 
   const now = new Date();
   const timestamp = now.toLocaleString('en-NP', { dateStyle:'medium', timeStyle:'short' });
@@ -648,7 +648,7 @@ function openProduct(productId, catKey) {
 
   // WhatsApp link
   const waMsg = encodeURIComponent(`Hi! I'm interested in:\n*${p.name}*\nPrice: Rs. ${p.price.toLocaleString()}\n\nPlease confirm availability.`);
-  document.getElementById('pdp-wa-btn').href = `https://wa.me/9779707111332?text=${waMsg}`;
+  document.getElementById('pdp-wa-btn').href = `https://wa.me/9779744924667?text=${waMsg}`;
 
   // Build gallery
   currentPdpThumbs = buildThumbs(p);
