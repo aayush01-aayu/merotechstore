@@ -153,6 +153,11 @@ function nav(page) {
   });
   window.scrollTo({top: 0, behavior: 'smooth'});
   currentPage = page;
+  // Hide sticky buy bar when navigating away from product page
+  if(page !== 'product') {
+    const sb = document.getElementById('pdp-sticky-bar');
+    if(sb) sb.classList.remove('visible');
+  }
 }
 
 function toggleMenu() {
@@ -650,6 +655,23 @@ function openProduct(productId, catKey) {
   const waMsg = encodeURIComponent(`Hi! I'm interested in:\n*${p.name}*\nPrice: Rs. ${p.price.toLocaleString()}\n\nPlease confirm availability.`);
   document.getElementById('pdp-wa-btn').href = `https://wa.me/9779744924667?text=${waMsg}`;
 
+  // ── STICKY BAR: populate price, WA link, cart state ──
+  const stickyBar = document.getElementById('pdp-sticky-bar');
+  const stickyPriceEl = document.getElementById('pdp-sticky-price-val');
+  const stickyCartBtn = document.getElementById('pdp-sticky-cart-btn');
+  const stickyWaBtn   = document.getElementById('pdp-sticky-wa-btn');
+  if(stickyPriceEl) stickyPriceEl.textContent = `Rs. ${p.price.toLocaleString()}`;
+  if(stickyWaBtn)   stickyWaBtn.href = `https://wa.me/9779744924667?text=${waMsg}`;
+  if(stickyCartBtn) {
+    if(p.avail === 'out-stock') {
+      stickyCartBtn.disabled = true; stickyCartBtn.style.opacity = '.5';
+      stickyCartBtn.textContent = 'Out of Stock';
+    } else {
+      stickyCartBtn.disabled = false; stickyCartBtn.style.opacity = '1';
+      stickyCartBtn.innerHTML = '🛒 Add to Cart';
+    }
+  }
+
   // Build gallery
   currentPdpThumbs = buildThumbs(p);
   currentPdpThumb = 0;
@@ -661,12 +683,37 @@ function openProduct(productId, catKey) {
 
   // Navigate to product page
   nav('product');
+
+  // Show sticky bar on mobile once user scrolls past the in-page Add-to-Cart button
+  if(stickyBar) {
+    // Small delay so scroll listener is re-evaluated after page renders
+    setTimeout(() => {
+      function pdpScrollHandler() {
+        const addBtn = document.getElementById('pdp-add-btn');
+        const pageEl = document.getElementById('page-product');
+        if(!pageEl || !pageEl.classList.contains('active')) { stickyBar.classList.remove('visible'); return; }
+        if(!addBtn) { stickyBar.classList.add('visible'); return; }
+        const rect = addBtn.getBoundingClientRect();
+        // Show sticky bar when the real Add-to-Cart button has scrolled out of view
+        if(rect.bottom < 0 || rect.top > window.innerHeight) {
+          stickyBar.classList.add('visible');
+        } else {
+          stickyBar.classList.remove('visible');
+        }
+      }
+      window.removeEventListener('scroll', window._pdpScrollHandler);
+      window._pdpScrollHandler = pdpScrollHandler;
+      window.addEventListener('scroll', pdpScrollHandler, { passive: true });
+      pdpScrollHandler(); // run once immediately
+    }, 100);
+  }
 }
 
 function renderGallery() {
   const p = currentPdpProduct;
   const thumbsEl = document.getElementById('pdp-thumbs');
   const mainEl   = document.getElementById('pdp-main-img');
+  const dotsEl   = document.getElementById('pdp-dots');
 
   // Thumbs
   thumbsEl.innerHTML = currentPdpThumbs.map((t, i) => {
@@ -676,24 +723,31 @@ function renderGallery() {
     return `<div class="pdp-thumb ${i===currentPdpThumb?'active':''}" onclick="selectThumb(${i})" style="font-size:1.6rem;">${t.emoji}</div>`;
   }).join('');
 
-  // Main image
+  // Dot indicators (mobile)
+  if(dotsEl) {
+    dotsEl.innerHTML = currentPdpThumbs.map((_, i) =>
+      `<div class="pdp-dot ${i===currentPdpThumb?'active':''}" onclick="event.stopPropagation();selectThumb(${i})"></div>`
+    ).join('');
+    dotsEl.style.display = currentPdpThumbs.length > 1 ? 'flex' : 'none';
+  }
+
+  // Main image — rebuild content, preserve dots and zoom-hint elements
   const active = currentPdpThumbs[currentPdpThumb];
-  mainEl.innerHTML = '';
+  // Remove only media children (img/emoji), not dots/hint
+  Array.from(mainEl.children).forEach(c => {
+    if(!c.classList.contains('pdp-dots') && !c.classList.contains('pdp-img-zoom-hint')) c.remove();
+  });
   if(active && active.src) {
     const img = document.createElement('img');
     img.src = active.src;
     img.alt = p.name;
-    mainEl.appendChild(img);
+    mainEl.insertBefore(img, mainEl.firstChild);
   } else {
     const em = document.createElement('div');
     em.className = 'pdp-main-emoji';
     em.textContent = p.emoji;
-    mainEl.appendChild(em);
+    mainEl.insertBefore(em, mainEl.firstChild);
   }
-  const hint = document.createElement('div');
-  hint.className = 'pdp-img-zoom-hint';
-  hint.textContent = 'Click to enlarge';
-  mainEl.appendChild(hint);
 }
 
 function selectThumb(idx) {
@@ -739,6 +793,70 @@ function sharePdp(platform) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+/* ── MOBILE BOTTOM NAV ── */
+function mbnActive(el) {
+  document.querySelectorAll('.mbn-item').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Sync cart badge on bottom nav
+(function() {
+  var origUpdateCart = window.updateCart;
+  function syncMbnBadge() {
+    var badge = document.getElementById('mbn-cart-badge');
+    var mainCount = document.getElementById('cart-count');
+    if (!badge || !mainCount) return;
+    var n = parseInt(mainCount.textContent) || 0;
+    badge.textContent = n;
+    if (n > 0) { badge.classList.add('show'); }
+    else { badge.classList.remove('show'); }
+  }
+  // Patch addToCart to also update mbn badge
+  var origAddToCart = window.addToCart;
+  if (origAddToCart) {
+    window.addToCart = function() {
+      origAddToCart.apply(this, arguments);
+      setTimeout(syncMbnBadge, 50);
+    };
+  }
+  document.addEventListener('DOMContentLoaded', syncMbnBadge);
+})();
+
+/* ── SWIPE GESTURE ON PDP GALLERY (mobile) ── */
+(function() {
+  var startX = 0, startY = 0;
+  document.addEventListener('touchstart', function(e) {
+    var el = e.target.closest('.pdp-main-img');
+    if (!el) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    var el = e.target.closest('.pdp-main-img');
+    if (!el) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      var total = currentPdpThumbs.length;
+      if (total < 2) return;
+      if (dx < 0) { currentPdpThumb = (currentPdpThumb + 1) % total; }
+      else         { currentPdpThumb = (currentPdpThumb - 1 + total) % total; }
+      renderGallery();
+    }
+  }, { passive: true });
+})();
+
+/* ── CLOSE MOBILE MENU WHEN TAPPING OVERLAY ── */
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('mobile-menu');
+  var hamburger = document.getElementById('hamburger');
+  if (menu && menu.classList.contains('open') &&
+      !menu.contains(e.target) && !hamburger.contains(e.target)) {
+    closeMenu();
+  }
+});
 
 
 /* ── LOGO THEME SWAP ── */
