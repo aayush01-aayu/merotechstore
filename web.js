@@ -161,10 +161,17 @@ function nav(page) {
 }
 
 function toggleMenu() {
-  document.getElementById('mobile-menu').classList.toggle('open');
+  var menu = document.getElementById('mobile-menu');
+  var hbg  = document.getElementById('hamburger');
+  var isOpen = menu.classList.toggle('open');
+  hbg.classList.toggle('open', isOpen);
+  // Prevent body scroll when menu open
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 function closeMenu() {
   document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 window.addEventListener('scroll', () => {
@@ -175,9 +182,9 @@ window.addEventListener('scroll', () => {
 //  PRODUCT RENDERING
 // ══════════════════════════════════════════
 function availBadge(avail) {
-  if(avail==='in-stock') return '<div class="tag-green" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;flex-shrink:0;"></span>In Stock</div>';
-  if(avail==='low-stock') return '<div class="tag-yellow" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0;"></span>Low Stock</div>';
-  if(avail==='pre-order') return '<div class="tag-blue" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0;"></span>Pre-Order</div>';
+  if(avail==='in-stock')  return '<span class="tag-green"><span class="tag-dot" style="background:var(--green)"></span>In Stock</span>';
+  if(avail==='low-stock') return '<span class="tag-yellow"><span class="tag-dot" style="background:var(--gold)"></span>Low Stock</span>';
+  if(avail==='pre-order') return '<span class="tag-blue"><span class="tag-dot" style="background:var(--gold)"></span>Pre-Order</span>';
   return '';
 }
 
@@ -188,34 +195,53 @@ function starsHtml(rating) {
 }
 
 function productCard(p) {
-  const disabled = p.avail === 'pre-order' ? 'opacity:.6;pointer-events:none;' : '';
+  const isPreOrder = p.avail === 'pre-order';
   const imgSrc = (Array.isArray(p.imgs) ? p.imgs.find(src => src) : '') || (p.img || '');
   const hasImg = imgSrc ? 'has-image' : '';
   const isHomemade = p._cat === 'ups';
-  const homemadeBorder = isHomemade ? 'border-color:rgba(201,168,76,.2);' : '';
   const waMsg = encodeURIComponent(`Hi! I'm interested in your homemade gadget:\n*${p.name}*\nCould you tell me more and check availability?`);
+
+  // Discount % badge
+  const discountBadge = (p.oldPrice && p.oldPrice > p.price)
+    ? `<div class="product-discount-badge">-${Math.round((1 - p.price/p.oldPrice)*100)}%</div>`
+    : '';
+
+  // Availability badge (top-left)
+  const availTag = isHomemade
+    ? '<span class="tag-handmade"><span class="tag-dot" style="background:var(--gold)"></span>Handmade</span>'
+    : availBadge(p.avail);
+
+  // CTA button
+  const ctaBtn = isHomemade
+    ? `<a class="add-cart-btn btn-wa" href="https://wa.me/9779744924667?text=${waMsg}" target="_blank" style="text-decoration:none;" onclick="event.stopPropagation()">💬 Enquire</a>`
+    : `<button class="add-cart-btn" ${isPreOrder ? 'style="opacity:.55;pointer-events:none;"' : ''} onclick="event.stopPropagation();addToCart('${p.id}','${escHtml(p.name)}',${p.price},'${p.emoji}',this)">
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" style="flex-shrink:0"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 5M17 18a1 1 0 100-2 1 1 0 000 2zM9 18a1 1 0 100-2 1 1 0 000 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        ${isPreOrder ? 'Pre-Order' : 'Add'}
+      </button>`;
+
   return `
-    <div class="product-card" data-cat="${p.cat}" data-id="${p.id}" onclick="openProduct('${p.id}','${p._cat||p.cat}')" style="${homemadeBorder}">
+    <div class="product-card" data-cat="${p.cat}" data-id="${p.id}" onclick="openProduct('${p.id}','${p._cat||p.cat}')">
       <div class="product-img ${hasImg}">
-        <div class="product-badge">${isHomemade ? '<span class="tag-handmade">🛠️ Handmade</span>' : availBadge(p.avail)}</div>
+        <div class="product-badge">${availTag}</div>
+        ${discountBadge}
         ${imgSrc
-          ? `<img class="product-real-img" src="${imgSrc}" alt="${escHtml(p.name)}">`
+          ? `<img class="product-real-img" src="${imgSrc}" alt="${escHtml(p.name)}" loading="lazy">`
           : `<div class="pimg-placeholder"><div class="pimg-placeholder-icon">${p.emoji}</div><div class="pimg-placeholder-label">${isHomemade ? 'Handmade' : 'No Image'}</div></div>`
         }
       </div>
       <div class="product-info">
-        <div class="rating"><span class="stars">${starsHtml(p.rating)}</span><span class="rating-count">(${p.rev})</span></div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-specs">${p.specs}</div>
+        <div class="product-rating-row">
+          <span class="product-stars">${starsHtml(p.rating)}</span>
+          <span class="product-rating-count">(${p.rev})</span>
+        </div>
+        <div class="product-name">${escHtml(p.name)}</div>
+        <div class="product-specs">${escHtml(p.specs)}</div>
         <div class="product-footer">
-          <div>
+          <div class="product-price-block">
             <span class="product-price">Rs. ${p.price.toLocaleString()}</span>
             ${p.oldPrice ? `<span class="product-price-old">Rs. ${p.oldPrice.toLocaleString()}</span>` : ''}
           </div>
-          ${isHomemade
-            ? `<a class="add-cart-btn" href="https://wa.me/9779744924667?text=${waMsg}" target="_blank" style="background:#25d366;text-decoration:none;" onclick="event.stopPropagation()">💬 Enquire</a>`
-            : `<button class="add-cart-btn" style="${disabled}" onclick="event.stopPropagation();addToCart('${p.id}','${escHtml(p.name)}',${p.price},'${p.emoji}')">🛒 ${p.avail === 'pre-order' ? 'Pre-Order' : 'Add'}</button>`
-          }
+          ${ctaBtn}
         </div>
       </div>
     </div>`;
@@ -313,12 +339,26 @@ function renderTimeline() {
 // ══════════════════════════════════════════
 //  CART
 // ══════════════════════════════════════════
-function addToCart(id, name, price, emoji) {
+function addToCart(id, name, price, emoji, btnEl) {
   const existing = cart.find(i => i.id === id);
   if(existing) { existing.qty++; }
   else { cart.push({id, name, price, emoji, qty:1}); }
   updateCartUI();
   showToast(`🛒 ${name.substring(0,22)}... added to cart!`);
+  // Subtle button feedback
+  if(btnEl) {
+    const orig = btnEl.textContent;
+    btnEl.textContent = '✓ Added';
+    btnEl.style.background = 'var(--green)';
+    btnEl.style.color = '#fff';
+    btnEl.disabled = true;
+    setTimeout(() => {
+      btnEl.textContent = orig;
+      btnEl.style.background = '';
+      btnEl.style.color = '';
+      btnEl.disabled = false;
+    }, 1200);
+  }
 }
 
 function removeFromCart(id) {
@@ -475,9 +515,22 @@ function sortProducts(category, value) {
 function showToast(msg) {
   const toast = document.getElementById('toast');
   document.getElementById('toast-msg').textContent = msg;
+  // Remove then re-add to re-trigger animation if already showing
+  toast.classList.remove('show');
+  void toast.offsetWidth; // reflow
   toast.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+  toastTimer = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(12px) scale(.97)';
+    toast.style.transition = 'opacity .35s cubic-bezier(.4,0,.2,1), transform .35s cubic-bezier(.4,0,.2,1)';
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.style.opacity = '';
+      toast.style.transform = '';
+      toast.style.transition = '';
+    }, 360);
+  }, 3000);
 }
 
 // ══════════════════════════════════════════
@@ -763,8 +816,21 @@ function changeQty(delta) {
 function pdpAddToCart() {
   if(!currentPdpProduct) return;
   const p = currentPdpProduct;
+  const btn = document.getElementById('pdp-add-btn');
   for(let i=0; i<currentPdpQty; i++) {
     addToCart(p.id, p.name, p.price, p.emoji);
+  }
+  // Visual feedback on the PDP button
+  if(btn) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Added to Cart';
+    btn.style.background = 'var(--green)';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 1400);
   }
 }
 
@@ -872,13 +938,6 @@ function applyLogoTheme(theme) {
   });
 }
 
-var _origToggle = window.toggleTheme;
-window.toggleTheme = function() {
-  _origToggle();
-  var theme = document.documentElement.getAttribute('data-theme');
-  applyLogoTheme(theme);
-};
-
 document.addEventListener('DOMContentLoaded', function() {
   var theme = document.documentElement.getAttribute('data-theme') || 'light';
   applyLogoTheme(theme);
@@ -895,6 +954,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem(STORAGE_KEY, next);
+    applyLogoTheme(next);
   };
 })();
 
@@ -912,4 +972,19 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(hideLoader, 2200);
     });
   }
+})();
+
+/* ── SCROLL REVEAL OBSERVER ── */
+(function() {
+  var els = document.querySelectorAll('[data-reveal]');
+  if (!els.length) return;
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  els.forEach(function(el) { io.observe(el); });
 })();
