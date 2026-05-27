@@ -11,14 +11,11 @@
 <meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
 <title>Mero Tech Store — Nepal's Tech Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Syne+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="web.css">
 <script src="web.js" defer></script>
 </head>
 <body>
-<div class="overlay" id="overlay" onclick="closeCart()"></div>
-
-
 <script>
 (function(){
   var t = localStorage.getItem('merotech-theme') || 'light';
@@ -58,13 +55,13 @@
     </a>
     <div class="nav-links" id="nav-links">
       <button class="nav-link active" data-page="home" onclick="nav('home')">Home</button>
-      <button class="nav-link" data-page="frames" onclick="nav('frames')">📷 Photo Frames</button>
-      <button class="nav-link" data-page="gadgets" onclick="nav('gadgets')">🔌 Gadgets</button>
-      <button class="nav-link" data-page="repairs" onclick="nav('repairs')">🔧 Repairs</button>
-      <button class="nav-link" data-page="pcb" onclick="nav('pcb')">🖥️ PCB Orders</button>
-      <button class="nav-link" data-page="ups" onclick="nav('ups')">🛠️ Homemade Gadgets</button>
-      <button class="nav-link" data-page="booking" onclick="nav('booking')">📋 Book Repair</button>
-      <button class="nav-link" data-page="upcoming" onclick="nav('upcoming')">🚀 Upcoming</button>
+      <button class="nav-link" data-page="frames" onclick="nav('frames')">Photo Frames</button>
+      <button class="nav-link" data-page="gadgets" onclick="nav('gadgets')">Gadgets</button>
+      <button class="nav-link" data-page="repairs" onclick="nav('repairs')">Repairs</button>
+      <button class="nav-link" data-page="pcb" onclick="nav('pcb')">PCB Orders</button>
+      <button class="nav-link" data-page="ups" onclick="nav('ups')">Homemade</button>
+      <button class="nav-link" data-page="booking" onclick="nav('booking')">Book Repair</button>
+      <button class="nav-link" data-page="upcoming" onclick="nav('upcoming')">Upcoming</button>
     </div>
     <div class="nav-right">
       <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">
@@ -84,51 +81,107 @@
 </nav>
 
 <div class="mobile-menu" id="mobile-menu">
-  <button class="nav-link" onclick="nav('home');closeMenu()">🏠 Home</button>
-  <button class="nav-link" onclick="nav('frames');closeMenu()">📷 Photo Frames</button>
-  <button class="nav-link" onclick="nav('gadgets');closeMenu()">🔌 Gadget Accessories</button>
-  <button class="nav-link" onclick="nav('repairs');closeMenu()">🔧 Mobile Repairs</button>
-  <button class="nav-link" onclick="nav('pcb');closeMenu()">🖥️ PCB Orders</button>
-  <button class="nav-link" onclick="nav('ups');closeMenu()">🛠️ Homemade Gadgets</button>
-  <button class="nav-link" onclick="nav('booking');closeMenu()">📋 Book a Repair</button>
-  <button class="nav-link" onclick="nav('upcoming');closeMenu()">🚀 Upcoming Plans</button>
+  <button class="nav-link" onclick="nav('home');closeMenu()"><span class="mn-emoji">🏠</span> Home</button>
+  <div class="mobile-menu-divider"></div>
+  <button class="nav-link" onclick="nav('frames');closeMenu()"><span class="mn-emoji">🖼️</span> Photo Frames</button>
+  <button class="nav-link" onclick="nav('gadgets');closeMenu()"><span class="mn-emoji">🔌</span> Gadget Accessories</button>
+  <button class="nav-link" onclick="nav('pcb');closeMenu()"><span class="mn-emoji">🖥️</span> PCB Orders</button>
+  <button class="nav-link" onclick="nav('ups');closeMenu()"><span class="mn-emoji">🛠️</span> Homemade Gadgets</button>
+  <div class="mobile-menu-divider"></div>
+  <button class="nav-link" onclick="nav('repairs');closeMenu()"><span class="mn-emoji">🔧</span> Mobile Repairs</button>
+  <button class="nav-link" onclick="nav('upcoming');closeMenu()"><span class="mn-emoji">🚀</span> Upcoming Plans</button>
+  <div class="mobile-menu-cta">
+    <button onclick="nav('booking');closeMenu()">⚡ Book a Repair</button>
+  </div>
 </div>
 
 <div class="page active" id="page-home">
 
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-tag"><span class="hero-tag-dot"></span>Nepal's Most Trusted Tech Store · In Jhapa</div>
-      <h1 class="hero-h1">
-        <span class="line1">MERO</span>
-        <span class="line2">TECH</span>
-        <span class="line3">STORE</span>
+  <!-- ══ REDESIGNED HERO ══ -->
+  <section class="hero hero-v2">
+    <!-- Ambient background layers -->
+    <div class="hero-ambient-1"></div>
+    <div class="hero-ambient-2"></div>
+    <div class="hero-grid-lines"></div>
+
+    <div class="hero-v2-inner">
+
+      <!-- Top eyebrow -->
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        <span>Jhapa, Nepal</span>
+        <span class="hero-eyebrow-sep">·</span>
+        <span>Open Now</span>
+      </div>
+
+      <!-- Main headline — one clear message -->
+      <h1 class="hero-v2-h1">
+        <span class="hero-v2-line-a">MERO</span>
+        <span class="hero-v2-line-b">TECH</span>
+        <span class="hero-v2-line-c">STORE.</span>
       </h1>
-      <p class="hero-desc">Premium tech products at the lowest retail and wholesale prices. Photo frames, expert mobile repairs, PCB components, gadget accessories, and our own homemade gadgets — all under one roof in Jhapa.</p>
-      <div class="hero-actions">
-        <button class="btn btn-blue btn-lg" onclick="nav('booking')">Book a Repair</button>
-        <button class="btn btn-outline btn-lg" onclick="nav('gadgets')">Browse Products →</button>
+
+      <!-- Subheadline — single sharp sentence -->
+      <p class="hero-v2-sub">
+        Repairs done same-day. Products at honest prices.<br class="hero-v2-br"> Free diagnostics, genuine parts, zero surprises.
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero-v2-ctas">
+        <button class="hero-cta-primary" onclick="nav('booking')">
+          <span class="hero-cta-icon">⚡</span>
+          Book a Repair
+          <span class="hero-cta-arrow">→</span>
+        </button>
+        <button class="hero-cta-secondary" onclick="nav('gadgets')">
+          Browse Products
+        </button>
       </div>
-      <div class="hero-stats-row" style="display:flex;gap:32px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--border);margin-top:8px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">💰</div>
-          <div><div style="font-size:.82rem;font-weight:600;color:var(--text);">Low &amp; Wholesale Prices</div><div style="font-size:.74rem;color:var(--dim);">Retail &amp; bulk rates available</div></div>
+
+      <!-- Trust bar — replaces the busy stats row -->
+      <div class="hero-trust-bar">
+        <div class="hero-trust-item">
+          <svg class="hero-trust-icon" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 6v5c0 4.418 3.134 8.553 7 9 3.866-.447 7-4.582 7-9V6L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>Genuine OEM Parts</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">⚡</div>
-          <div><div style="font-size:.82rem;font-weight:600;color:var(--text);">Same-Day Repairs</div><div style="font-size:.74rem;color:var(--dim);">Most repairs in 2–4 hours</div></div>
+        <div class="hero-trust-divider"></div>
+        <div class="hero-trust-item">
+          <svg class="hero-trust-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l2.5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>Repairs in 2–4 Hours</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">🔬</div>
-          <div><div style="font-size:.82rem;font-weight:600;color:var(--text);">Free Diagnostics</div><div style="font-size:.74rem;color:var(--dim);">No charge for assessment</div></div>
+        <div class="hero-trust-divider"></div>
+        <div class="hero-trust-item">
+          <svg class="hero-trust-icon" viewBox="0 0 20 20" fill="none"><path d="M3 10l5 5 9-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Free Diagnostics</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">📦</div>
-          <div><div style="font-size:.82rem;font-weight:600;color:var(--text);">50+ Products</div><div style="font-size:.74rem;color:var(--dim);">Across six departments</div></div>
+        <div class="hero-trust-divider"></div>
+        <div class="hero-trust-item">
+          <svg class="hero-trust-icon" viewBox="0 0 20 20" fill="none"><path d="M4 8h12M4 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="2" y="4" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Wholesale Pricing</span>
         </div>
       </div>
+
+      <!-- Social proof strip -->
+      <div class="hero-proof-strip">
+        <div class="hero-proof-avatars">
+          <span class="hero-proof-av">A</span>
+          <span class="hero-proof-av">R</span>
+          <span class="hero-proof-av">S</span>
+          <span class="hero-proof-av">P</span>
+        </div>
+        <div class="hero-proof-text">
+          <span class="hero-proof-stars">★★★★★</span>
+          <span>Trusted by <strong>500+</strong> customers in Jhapa &amp; beyond</span>
+        </div>
+        <div class="hero-proof-badge">
+          <span class="hero-proof-badge-dot"></span>
+          WhatsApp Support Available
+        </div>
+      </div>
+
     </div>
   </section>
+  <!-- ══ END REDESIGNED HERO ══ -->
 
   <section class="section" style="border-top:1px solid var(--border);">
     <div class="container">
@@ -171,24 +224,24 @@
 
   <section class="section" style="border-top:1px solid var(--border);">
     <div class="container">
-      <div class="section-label">Why Choose Us</div>
+      <div class="section-label" data-reveal>Why Choose Us</div>
       <div class="section-title" style="margin-bottom:36px;">Built on Honest Service</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
-        <div style="border-left:2px solid var(--blue);padding-left:20px;">
-          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:8px;">Low & Wholesale Prices</div>
-          <div style="font-size:.82rem;color:var(--muted);line-height:1.7;">All products available at the best retail and wholesale rates. Bulk buyers get special discounted pricing on every order.</div>
+        <div class="why-item">
+          <div class="why-item-title">Low & Wholesale Prices</div>
+          <div class="why-item-desc">All products available at the best retail and wholesale rates. Bulk buyers get special discounted pricing on every order.</div>
         </div>
-        <div style="border-left:2px solid var(--blue);padding-left:20px;">
-          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:8px;">Same-Day Repair Service</div>
-          <div style="font-size:.82rem;color:var(--muted);line-height:1.7;">Most screen and battery repairs completed within 2–4 hours. Book online, walk in, walk out the same day.</div>
+        <div class="why-item">
+          <div class="why-item-title">Same-Day Repair Service</div>
+          <div class="why-item-desc">Most screen and battery repairs completed within 2–4 hours. Book online, walk in, walk out the same day.</div>
         </div>
-        <div style="border-left:2px solid var(--blue);padding-left:20px;">
-          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:8px;">Free Device Diagnostics</div>
-          <div style="font-size:.82rem;color:var(--muted);line-height:1.7;">We diagnose your device at no cost. Know exactly what's wrong before committing to any repair — no surprises.</div>
+        <div class="why-item">
+          <div class="why-item-title">Free Device Diagnostics</div>
+          <div class="why-item-desc">We diagnose your device at no cost. Know exactly what's wrong before committing to any repair — no surprises.</div>
         </div>
-        <div style="border-left:2px solid var(--blue);padding-left:20px;">
-          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:8px;">Genuine OEM Parts</div>
-          <div style="font-size:.82rem;color:var(--muted);line-height:1.7;">We source and use OEM-grade or genuine spare parts to ensure the best longevity and performance after every repair.</div>
+        <div class="why-item">
+          <div class="why-item-title">Genuine OEM Parts</div>
+          <div class="why-item-desc">We source and use OEM-grade or genuine spare parts to ensure the best longevity and performance after every repair.</div>
         </div>
       </div>
     </div>
@@ -269,24 +322,24 @@
         <div style="display:flex;flex-direction:column;gap:14px;" id="services-list"></div>
       </div>
       <div style="position:sticky;top:80px;">
-        <div class="info-card" style="background:var(--blue);border-color:var(--blue-d);margin-bottom:16px;">
-          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:10px;color:#fff;">Book a Repair Now</div>
-          <p style="font-size:.85rem;color:rgba(255,255,255,.8);margin-bottom:18px;line-height:1.6;">Contact us directly on WhatsApp. We'll discuss your problem, confirm availability, and keep you updated.</p>
-          <button class="btn" style="background:#fff;color:var(--blue);width:100%;justify-content:center;font-weight:700;" onclick="nav('booking')">Book via WhatsApp →</button>
+        <div class="repair-book-card">
+          <div class="rbc-title">Book a Repair Now</div>
+          <p class="rbc-desc">Contact us directly on WhatsApp. We'll discuss your problem, confirm availability, and keep you updated.</p>
+          <button class="rbc-btn" onclick="nav('booking')">📋 Book via WhatsApp →</button>
         </div>
         <div class="info-card">
           <div class="info-card-title">🏷️ Supported Brands</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Apple</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Samsung</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Xiaomi</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Realme</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">OnePlus</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Vivo</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Oppo</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Huawei</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">Nokia</span>
-            <span style="background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:.76rem;">+More</span>
+            <span class="brand-chip">Apple</span>
+            <span class="brand-chip">Samsung</span>
+            <span class="brand-chip">Xiaomi</span>
+            <span class="brand-chip">Realme</span>
+            <span class="brand-chip">OnePlus</span>
+            <span class="brand-chip">Vivo</span>
+            <span class="brand-chip">Oppo</span>
+            <span class="brand-chip">Huawei</span>
+            <span class="brand-chip">Nokia</span>
+            <span class="brand-chip">+More</span>
           </div>
         </div>
         <div class="info-card" style="margin-top:16px;">
@@ -680,69 +733,182 @@
 </nav>
 
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
 
+  <!-- ── CTA BAND ── -->
+  <div class="footer-cta-band">
+    <div class="footer-cta-band-inner">
+      <div class="footer-cta-text">
+        <span class="footer-cta-label">Ready to get started?</span>
+        <div class="footer-cta-heading">Your device deserves the best.</div>
+        <p class="footer-cta-sub">Same-day repairs · Genuine parts · Free diagnostics in Jhapa</p>
+      </div>
+      <div class="footer-cta-actions">
+        <button class="footer-cta-btn-primary" onclick="nav('booking')">
+          ⚡ Book a Repair
+        </button>
+        <button class="footer-cta-btn-secondary" onclick="nav('gadgets')">
+          Browse Products →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN BODY ── -->
+  <div class="footer-main">
+    <div class="footer-main-inner">
+
+      <!-- Brand column -->
+      <div class="footer-brand">
+        <div class="footer-brand-logo-row">
           <img class="footer-logo-img" src="images/lll.png" alt="Mero Tech Store Logo" data-light-src="images/lll.png" data-dark-src="images/lll.png">
-          <div class="footer-brand-name">Mero Tech Store</div>
+          <div class="footer-brand-name">Mero<span>Tech</span></div>
         </div>
-        <p class="footer-brand-desc">Nepal's most trusted tech store based in Jhapa. Expert repairs, premium products, and honest service.</p>
+        <span class="footer-brand-tagline">Nepal's Tech Hub · Jhapa</span>
+        <p class="footer-brand-desc">Expert repairs, premium products, and honest service from the heart of Jhapa. We treat your device like our own.</p>
+
+        <!-- Rating pill -->
+        <div class="footer-rating-pill">
+          <span class="footer-rating-stars">★★★★★</span>
+          <span class="footer-rating-text">Trusted by <strong>500+</strong> customers across Jhapa</span>
+        </div>
+
+        <!-- Social -->
+        <span class="footer-social-label">Follow Us</span>
         <div class="footer-social">
-          <a class="social-btn" href="https://www.facebook.com/sabin.babu.501" target="_blank" rel="noopener" title="Facebook — Sabin Baskota" style="text-decoration:none;">
+          <a class="social-btn" href="https://www.facebook.com/sabin.babu.501" target="_blank" rel="noopener" title="Facebook">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </a>
-          <a class="social-btn" href="https://www.instagram.com/sabin_creator?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" title="Instagram — Sabin Baskota" style="text-decoration:none;">
+          <a class="social-btn" href="https://www.instagram.com/sabin_creator?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" title="Instagram">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
-          <a class="social-btn" href="https://wa.me/9779707111332" target="_blank" rel="noopener" title="WhatsApp — Chat with Aayush Prasai" style="text-decoration:none;">
+          <a class="social-btn" href="https://wa.me/9779707111332" target="_blank" rel="noopener" title="WhatsApp">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
-          <a class="social-btn" href="https://www.tiktok.com/@sabin_creator_?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" title="TikTok — Sabin Baskota" style="text-decoration:none;">
+          <a class="social-btn" href="https://www.tiktok.com/@sabin_creator_?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" title="TikTok">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
           </a>
         </div>
       </div>
+
+      <!-- Products -->
       <div>
         <div class="footer-col-title">Products</div>
         <ul class="footer-links">
-          <li><span onclick="nav('frames')">Photo Frames</span></li>
-          <li><span onclick="nav('gadgets')">Gadget Accessories</span></li>
-          <li><span onclick="nav('ups')">Homemade Gadgets</span></li>
-          <li><span onclick="nav('pcb')">PCB Components</span></li>
+          <li><span onclick="nav('frames')">Photo Frames <span class="footer-link-arrow">›</span></span></li>
+          <li><span onclick="nav('gadgets')">Gadget Accessories <span class="footer-link-arrow">›</span></span></li>
+          <li><span onclick="nav('ups')">Homemade Gadgets <span class="footer-link-arrow">›</span></span></li>
+          <li><span onclick="nav('pcb')">PCB Components <span class="footer-link-arrow">›</span></span></li>
+          <li><span onclick="nav('upcoming')">Coming Soon <span class="footer-link-arrow">›</span></span></li>
         </ul>
       </div>
+
+      <!-- Services -->
       <div>
         <div class="footer-col-title">Services</div>
         <ul class="footer-links">
-          <li><span onclick="nav('repairs')">Mobile Repairs</span></li>
-          <li><span onclick="nav('pcb')">PCB Orders</span></li>
-          <li><span onclick="nav('booking')">Book a Repair</span></li>
-          <li><span>Data Recovery</span></li>
-          <li><span>Network Setup</span></li>
+          <li><span onclick="nav('repairs')">Mobile Repairs <span class="footer-link-arrow">›</span></span></li>
+          <li><span onclick="nav('booking')">Book a Repair <span class="footer-link-arrow">›</span></span></li>
+          <li><span onclick="nav('pcb')">PCB Orders <span class="footer-link-arrow">›</span></span></li>
+          <li><span>Data Recovery <span class="footer-link-arrow">›</span></span></li>
+          <li><span>Network Setup <span class="footer-link-arrow">›</span></span></li>
         </ul>
       </div>
+
+      <!-- Contact -->
       <div>
         <div class="footer-col-title">Contact</div>
-        <ul class="footer-links">
-          <li><a href="https://www.google.com/maps/place/Mero+Tech+Store/@26.7325861,88.0286851,673m/data=!3m2!1e3!4b1!4m6!3m5!1s0x39e5b700624f52f1:0xe1d87a318641b636!8m2!3d26.7325861!4d88.03126!16s%2Fg%2F11nhm32wy2?entry=ttu&g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none;cursor:pointer;transition:color .2s;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--muted)'">📍Budhabare, Jhapa</a></li>
-          <li><span>📱 +977 9707111332</span></li>
-          <li><span>📱 +977 9745260730</span></li>
-          <li><span>✉️ merotech01@gmail.com</span></li>
-          <li><span style="color:var(--green);">⏰ Sun–Sat 9AM–7PM</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">© 2026 Mero Tech Store. All rights reserved. Budhabare, Jhapa, Nepal.</div>
-      <div class="footer-badges">
-        <span class="footer-badge">🔒 Secure Payments</span>
-        <span class="footer-badge">📦 Free Delivery </span>
-        <span class="footer-badge">🛡️ Genuine OEM Parts</span>
+
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">📍</div>
+          <div class="footer-contact-info">
+            <span class="footer-contact-label">Location</span>
+            <a class="footer-contact-value" href="https://www.google.com/maps/place/Mero+Tech+Store/@26.7325861,88.0286851,673m/data=!3m2!1e3!4b1!4m6!3m5!1s0x39e5b700624f52f1:0xe1d87a318641b636!8m2!3d26.7325861!4d88.03126!16s%2Fg%2F11nhm32wy2?entry=ttu&g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">Budhabare, Jhapa</a>
+          </div>
+        </div>
+
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">📱</div>
+          <div class="footer-contact-info">
+            <span class="footer-contact-label">Phone</span>
+            <a class="footer-contact-value" href="tel:+9779707111332">+977 9707111332</a>
+            <a class="footer-contact-value" href="tel:+9779745260730">+977 9745260730</a>
+          </div>
+        </div>
+
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">✉️</div>
+          <div class="footer-contact-info">
+            <span class="footer-contact-label">Email</span>
+            <a class="footer-contact-value" href="mailto:merotech01@gmail.com">merotech01@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">⏰</div>
+          <div class="footer-contact-info">
+            <span class="footer-contact-label">Hours</span>
+            <span class="footer-contact-value green">Open · Sun–Sat</span>
+            <span class="footer-hours-detail">9:00 AM – 7:00 PM</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
+
+  <!-- ── TRUST STRIP ── -->
+  <div class="footer-trust-strip">
+    <div class="footer-trust-inner">
+      <div class="footer-trust-item">
+        <div class="footer-trust-icon-wrap">🛡️</div>
+        <div class="footer-trust-text">
+          <div class="footer-trust-title">Genuine OEM Parts</div>
+          <div class="footer-trust-sub">Only authentic components</div>
+        </div>
+      </div>
+      <div class="footer-trust-item">
+        <div class="footer-trust-icon-wrap">⚡</div>
+        <div class="footer-trust-text">
+          <div class="footer-trust-title">Same-Day Repairs</div>
+          <div class="footer-trust-sub">Most done in 2–4 hours</div>
+        </div>
+      </div>
+      <div class="footer-trust-item">
+        <div class="footer-trust-icon-wrap">🔍</div>
+        <div class="footer-trust-text">
+          <div class="footer-trust-title">Free Diagnostics</div>
+          <div class="footer-trust-sub">No charge to assess</div>
+        </div>
+      </div>
+      <div class="footer-trust-item">
+        <div class="footer-trust-icon-wrap">💬</div>
+        <div class="footer-trust-text">
+          <div class="footer-trust-title">WhatsApp Support</div>
+          <div class="footer-trust-sub">Chat with us anytime</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOTTOM BAR ── -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <div class="footer-copy">
+        © 2026 <a onclick="nav('home')" style="cursor:pointer">Mero Tech Store</a>. All rights reserved. Budhabare, Jhapa, Nepal.
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-made-in">
+          <span class="footer-made-flag">🇳🇵</span>
+          <span>Made with pride in Nepal</span>
+        </div>
+        <div class="footer-bottom-links">
+          <span class="footer-bottom-link">Privacy Policy</span>
+          <span class="footer-bottom-link">Terms of Service</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </footer>
 </body>
 </html>
